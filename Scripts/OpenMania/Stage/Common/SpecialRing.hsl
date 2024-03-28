@@ -21,10 +21,10 @@ class SpecialRing {
         this.SFX_SpecialWarp = Resources.LoadSound("SoundFX/Global/SpecialWarp.wav", SCOPE_SCENE);
 
         this.ArrayBufferIndex = 0;
-        Draw.InitArrayBuffer(this.ArrayBufferIndex, 0x200);
-        Draw.SetAmbientLighting(this.ArrayBufferIndex, 0.625, 0.625, 0.625);
-        Draw.SetDiffuseLighting(this.ArrayBufferIndex, 1.0, 1.0, 1.0);
-        Draw.SetSpecularLighting(this.ArrayBufferIndex, 0.25, 0.25, 0.25);
+        Scene3D.Create(0x200);
+        Scene3D.SetAmbientLighting(this.ArrayBufferIndex, 0.625, 0.625, 0.625);
+        Scene3D.SetDiffuseLighting(this.ArrayBufferIndex, 1.0, 1.0, 1.0);
+        Scene3D.SetSpecularLighting(this.ArrayBufferIndex, 0.25, 0.25, 0.25);
 
         this.ViewMatrix = Matrix.Create();
         this.NormalMatrix = Matrix.Create();
