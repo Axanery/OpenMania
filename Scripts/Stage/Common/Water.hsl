@@ -19,15 +19,13 @@ event Water_Load() {
 }
 
 class Water {
-    Create(flag) {
+    Water() {
         if (this.PropertyExists("filter") && !(this.PropertyGet("filter") & Mode_MANIA)) {
             this.Active = false;
             return;
         }
-
-        // Load
-        this.Sprite =
-        this.SPR_Water = Resources.LoadSprite("Sprites/Global/Water.bin", SCOPE_GAME);
+        
+        this.Sprite = Resources.LoadSprite("Sprites/Global/Water.bin", SCOPE_GAME);
         this.AutoPhysics = false;
         this.Status = null;
         this.RenderStatus = null;
@@ -37,10 +35,11 @@ class Water {
         this.SFX_Drown = Resources.LoadSound("SoundFX/Stage/Drown.wav", SCOPE_GAME);
         this.SFX_DrownAlert = Resources.LoadSound("SoundFX/Stage/DrownAlert.wav", SCOPE_GAME);
         this.SFX_Skim = Resources.LoadSound("SoundFX/HCZ/Skim.wav", SCOPE_GAME);
-
+    }
+    
+    Create(flag) {
         // Setup
         this.BlendMode = BlendMode_NORMAL;
-        this.Type = 0;
         this.NumDuds = 0;
         this.SizeX = 0.0;
         this.SizeY = 0.0;
@@ -57,7 +56,7 @@ class Water {
         this.AttachedPlayer = null;
         this.Visible = true;
 
-        this.Type = flag;
+        this.Type = flag ? flag : 0;
 
         if (this.PropertyExists("type"))
             this.Type = this.PropertyGet("type");
@@ -78,11 +77,11 @@ class Water {
         if (this.PropertyExists("buttonTag"))
             this.ButtonTag = this.PropertyGet("buttonTag");
         if (this.PropertyExists("r"))
-            this.R = Math.Max((this.PropertyGet("r") - 150.0) / 255.0, 0.0);
+            this.R = Math.Max(Number.AsInteger(this.PropertyGet("r")), 0);
         if (this.PropertyExists("g"))
-            this.G = Math.Max((this.PropertyGet("g") - 150.0) / 255.0, 0.0);
+            this.G = Math.Max(Number.AsInteger(this.PropertyGet("g")), 0);
         if (this.PropertyExists("b"))
-            this.B = Math.Max((this.PropertyGet("b") - 150.0) / 255.0, 0.0);
+            this.B = Math.Max(Number.AsInteger(this.PropertyGet("b")), 0);
         if (this.PropertyExists("priority"))
             this.PriorityIndex = this.PropertyGet("priority");
         if (this.PropertyExists("destroyOnTrigger"))
@@ -106,19 +105,23 @@ class Water {
             this.B = Math.Max((b - 150.0) / 255.0, 0.0);
             this.A = Math.Max(a / 255.0, 0.0);
         }
-        if (this.Type == 0) {
-            if (this.PropertyExists("Tide")) {
-                this.SizeX = this.PropertyGet("Tide");
-            }
-        }
-        else if (this.Type == 1) {
-            if (this.PropertyExists("Width")) {
-                this.SizeX = this.PropertyGet("Width");
-                this.X += this.SizeX * 0.5;
-            }
-            if (this.PropertyExists("Height")) {
-                this.SizeY = this.PropertyGet("Height");
-                this.Y += this.SizeY * 0.5;
+        
+        this.Priority = DrawGroup_HUD - 1;
+
+        if (this.PropertyExists("priority")) {
+            switch (this.PriorityIndex) {
+                case 0:
+                    this.Priority = DrawGroup_FGLow_Low - 1;
+                    break;
+                case 1:
+                    this.Priority = DrawGroup_FGLow_High;
+                    break;
+                case 2:
+                    this.Priority = DrawGroup_AboveTiles;
+                    break;
+                case 3:
+                    this.Priority = DrawGroup_HUD - 1;
+                    break;
             }
         }
 
@@ -133,24 +136,7 @@ class Water {
                 else if (this.PropertyExists("RGBA")) {
                     this.Status = this.Water_Status_WaterLevelController;
                     this.RenderStatus = this.Water_RenderStatus_WaterLevelController;
-                    this.Priority = DrawGroup_HUD - 1;
-
-                    if (this.PropertyExists("priority")) {
-                        switch (this.PriorityIndex) {
-                            case 0:
-                                this.Priority = DrawGroup_FGLow_Low - 1;
-                                break;
-                            case 1:
-                                this.Priority = DrawGroup_FGLow_High;
-                                break;
-                            case 2:
-                                this.Priority = DrawGroup_AboveTiles;
-                                break;
-                            case 3:
-                                this.Priority = DrawGroup_HUD - 1;
-                                break;
-                        }
-                    }
+                    
                 }
                 else {
                     this.A = String.Contains(sceneName, "AIZ") ? 0.375 : 0.875;
@@ -158,7 +144,6 @@ class Water {
                     this.Status = this.Water_Status_WaterLevelController;
                     this.RenderStatus = this.Water_RenderStatus_WaterLevelController;
                 }
-                print "Water Controller at: " + this.X + ", " + this.Y;
 
                 Water_TargetWaterLevel =
                 Water_CurrentWaterLevel =
@@ -169,20 +154,6 @@ class Water {
                 break;
             // Water block
             case 1:
-                switch (this.PriorityIndex) {
-                    case 0:
-                        this.Priority = DrawGroup_FGLow_Low - 1;
-                        break;
-                    case 1:
-                        this.Priority = DrawGroup_FGLow_High;
-                        break;
-                    case 2:
-                        this.Priority = DrawGroup_AboveTiles;
-                        break;
-                    case 3:
-                        this.Priority = DrawGroup_HUD - 1;
-                        break;
-                }
                 // this.A = String.Contains(sceneName, "CPZ") ? 0.375 : 0.875;
                 this.PriorityIndex = 4;
                 this.UpdateRegionW = this.SizeX;
@@ -245,6 +216,10 @@ class Water {
             case 6:
                 this.RenderRegionW =
                 this.RenderRegionH = 128.0;
+                
+                this.Alpha = 1.0;
+                
+                this.Priority = Zone.HUDPriority - 2;
 
                 this.ResetAnimation(1, 0);
                 this.AutoAnimate = false;
@@ -846,10 +821,9 @@ class Water {
         }
 
         Draw.SetBlendMode(this.BlendMode);
-        var spr = this.SPR_Water;
         var x = Math.Floor(vx / 64.0) * 64.0 + 32.0;
         for (var i = Number.AsInteger(vw / 64.0 + 2.0); i > 0; i--) {
-            Draw.Sprite(spr, 0, (Scene_Frame >> 2) % 10, x, Water_CurrentWaterLevel, false, false);
+            Draw.Sprite(this.Sprite, 0, (Scene_Frame >> 2) % 10, x, Water_CurrentWaterLevel, false, false);
             x += 64.0;
         }
         Draw.SetBlendMode(BlendMode_NORMAL);
@@ -858,7 +832,7 @@ class Water {
         if (!Static.Entity_IsOnScreen(this, this.SizeX, this.SizeY))
             return;
 
-        Draw.SetBlendMode(BlendMode_ADD);
+        Draw.SetBlendMode(BlendMode_SUBTRACT);
         Draw.SetBlendColor(this.R, this.G, this.B, this.A);
         Draw.Rectangle(this.X - this.SizeX * 0.5, this.Y - this.SizeY * 0.5, this.SizeX, this.SizeY);
         Draw.SetBlendMode(BlendMode_NORMAL);

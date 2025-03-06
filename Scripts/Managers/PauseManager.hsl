@@ -215,14 +215,13 @@ class PauseManager {
             else if (vc != 0)
                 return;
 
-            Draw.SetFilter(Filter_BLACK_AND_WHITE);
-            Draw.Texture(View.GetDrawTarget(0), 0, 0);
-            Draw.SetFilter(Filter_NONE);
-
             var frame = this.Frame;
 
             Draw.Save();
             Draw.Translate(Math.Floor(CameraX), Math.Floor(CameraY), 0.0);
+                Draw.SetFilter(Filter_BLACK_AND_WHITE);
+                Draw.Texture(View.GetDrawTarget(0), 0, 0);
+                Draw.SetFilter(Filter_NONE);
                 // // Dimming
                 // Draw.SetBlendColor(0.0, 0.0, 0.0, 0.25);
                 // Draw.Rectangle(0.0, 0.0, vw, vh);

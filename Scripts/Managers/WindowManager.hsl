@@ -27,7 +27,7 @@ class WindowManager {
             Window.SetTitle("OpenMania Framework");
             Window.SetBorderless(false);
             // this.SetScale(1);
-            this.SetScale(2);
+            this.SetScale(Window.GetScale());
             // this.SetScale(3);
 
             View.SetSize(7, Window.GetWidth(), Window.GetHeight());
@@ -39,7 +39,7 @@ class WindowManager {
     }
 
     event SetScale(screenScale) {
-        Window.SetSize(WindowManager_BaseW * screenScale, WindowManager_BaseH * screenScale);
+        Window.SetScale(screenScale);
         for (var i = 0; i < 8; i++)
             View.SetSize(i, WindowManager_BaseW, WindowManager_BaseH);
     }
