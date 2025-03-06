@@ -38,7 +38,7 @@ class PauseManager {
     }
 
     event OnAppDidEnterBackground() {
-        StartPause();
+        this.StartPause();
         this.Timer = 16;
     }
 
