@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gameconfig version="1.0">
+    <gameTitle>OpenMania Framework</gameTitle>
+	<shortTitle>OpenMania</shortTitle>
+	<version>1.251118</version>
+	<description>Bringing ideas into reality.</description>
+	
     <controls>
 		<action>Up</action>
 		<action>Down</action>
@@ -59,5 +64,6 @@
 			</default>
 		</player>
 	</controls>
-    <startscene>Stages/Title/Scene1.bin</startscene>
+    <activeCategory>1</activecategory>
+    <startSceneNum>0</startSceneNum>
 </gameconfig>

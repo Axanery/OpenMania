@@ -2,7 +2,7 @@
 
 <sceneConfig>
 	<category name="Presentation">
-		<stage name="Logos" folder="Logos" id="1" resourceFolder="Logos" filter="0" type="bin"/>
+		<stage name="Logos" folder="Logos" id="1" resourceFolder="Logos" filter="1" type="bin"/>
 		<stage name="Title Screen" folder="Title" id="1" resourceFolder="Title" filter="0" type="bin"/>
 		<stage name="Level Select" folder="LSelect" id="1" resourceFolder="LSelect" filter="0" type="bin"/>
 		<stage name="Menu" folder="Menu" id="1" resourceFolder="Menu" filter="0" type="bin"/>

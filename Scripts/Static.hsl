@@ -54,6 +54,8 @@ class Static {
         this.InitGame();
 
         this.InitTrigTables();
+        
+        Settings.Save();
     }
 
     SetupManiaGlobals() {
