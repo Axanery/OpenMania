@@ -225,8 +225,6 @@ class LevelSelect {
             Scene.SetLayerOffsetPosition(0, 0.0, this.OffsetY);
         }
 
-
-
         this.ViewY += (this.ViewYIndex - this.ViewY) / 4.0;
 
         if (this.SelectedLevel < this.ViewYIndex)
@@ -385,9 +383,9 @@ class LevelSelect {
             eased = Ease.InOutQuad(eased);
             Draw.SetBlendMode(BlendMode_SUBTRACT);
             Draw.SetBlendColor(
-                Math.Clamp(eased * 3.0 - 2.0, 0.0, 1.0),
-                Math.Clamp(eased * 3.0 - 1.0, 0.0, 1.0),
-                Math.Clamp(eased * 3.0, 0.0, 1.0), 1.0);
+                1.0 - Math.Clamp(eased * 3.0 - 2.0, 0.0, 1.0),
+                1.0 - Math.Clamp(eased * 3.0 - 1.0, 0.0, 1.0),
+                1.0 - Math.Clamp(eased * 3.0, 0.0, 1.0), 1.0);
             Draw.Rectangle(Math.Floor(CameraX), Math.Floor(CameraY), vw, vh);
             Draw.SetBlendMode(BlendMode_NORMAL);
         }

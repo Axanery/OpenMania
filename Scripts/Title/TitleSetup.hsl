@@ -225,7 +225,7 @@ class TitleSetup {
         tb ^= 0xFF;
 
         Draw.SetBlendMode(BlendMode_SUBTRACT);
-        Draw.SetBlendColor(tr / 255.0, tg / 255.0, tb / 255.0, 1.0);
+        Draw.SetBlendColor(1.0 - (tr / 255.0), 1.0 - (tg / 255.0), 1.0 - (tb / 255.0), 1.0);
         Draw.Rectangle(vx, 0.0, vw, vh);
         Draw.SetBlendMode(BlendMode_NORMAL);
     }

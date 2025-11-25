@@ -64,6 +64,6 @@
 			</default>
 		</player>
 	</controls>
-    <activeCategory>1</activecategory>
-    <startSceneNum>0</startSceneNum>
+    <activeCategory>0</activecategory>
+    <startSceneNum>1</startSceneNum>
 </gameconfig>

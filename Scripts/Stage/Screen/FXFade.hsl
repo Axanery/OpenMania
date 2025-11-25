@@ -129,20 +129,24 @@ class FXFade {
         else if (tb > 0xFF) tb = 0xFF;
 
         if (cl != 0) {
+            tr /= 255.0;
+            tg /= 255.0;
+            tb /= 255.0;
             Draw.SetBlendMode(BlendMode_ADD);
+            Draw.SetBlendColor(tr, tg, tb, 1.0);
         }
         else {
             tr ^= 0xFF;
             tg ^= 0xFF;
             tb ^= 0xFF;
+            
+            tr /= 255.0;
+            tg /= 255.0;
+            tb /= 255.0;
             Draw.SetBlendMode(BlendMode_SUBTRACT);
+            Draw.SetBlendColor(1.0 - tr, 1.0 - tg, 1.0 - tb, 1.0);
         }
-
-        tr /= 255.0;
-        tg /= 255.0;
-        tb /= 255.0;
-
-        Draw.SetBlendColor(tr, tg, tb, 1.0);
+       
         Draw.Rectangle(vx, vy, vw, vh);
         Draw.SetBlendMode(BlendMode_NORMAL);
     }
