@@ -833,7 +833,7 @@ class Water {
             return;
 
         Draw.SetBlendMode(BlendMode_SUBTRACT);
-        Draw.SetBlendColor(this.R, this.G, this.B, this.A);
+        Draw.SetBlendColor(1.0 - this.R, 1.0 - this.G, 1.0 - this.B, this.A);
         Draw.Rectangle(this.X - this.SizeX * 0.5, this.Y - this.SizeY * 0.5, this.SizeX, this.SizeY);
         Draw.SetBlendMode(BlendMode_NORMAL);
     }
