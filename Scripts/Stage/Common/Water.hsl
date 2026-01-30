@@ -219,7 +219,7 @@ class Water {
                 
                 this.Alpha = 1.0;
                 
-                this.Priority = Zone.HUDPriority - 2;
+                this.Priority = DrawGroup_AboveTiles;
 
                 this.ResetAnimation(1, 0);
                 this.AutoAnimate = false;
